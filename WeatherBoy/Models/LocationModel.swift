@@ -63,7 +63,13 @@ class LocationModel: NSObject, ObservableObject {
                     let json = try? JSON(data: response.data!)
                     let temp = Double(json!["main"]["temp"].stringValue)
                     self.temperature = Int(temp!)
-                    self.currentWeatherCode = Int(json!["weather"][0]["id"].stringValue)!/100
+                    if Int(json!["weather"][0]["id"].stringValue)! == 800 {
+                        self.currentWeatherCode = Int(json!["weather"][0]["id"].stringValue)!
+                    } else {
+                        
+                        self.currentWeatherCode = Int(json!["weather"][0]["id"].stringValue)!/100
+                    }
+                    
                     
                     let time = NSDate().timeIntervalSince1970
                     let interval = TimeInterval(time)
@@ -96,7 +102,12 @@ class LocationModel: NSObject, ObservableObject {
                     for i in 1...7 {
                         let temp = Int(Double(dailyForcasts![i]["temp"]["day"].stringValue)!)
                         self.tempFor7days.append(temp)
-                        self.weatherCodes.append(Int(dailyForcasts![i]["weather"][0]["id"].stringValue)!/100)
+                        if Int(dailyForcasts![i]["weather"][0]["id"].stringValue)! == 800 {
+                            self.weatherCodes.append(800)
+                        } else {
+                            self.weatherCodes.append(Int(dailyForcasts![i]["weather"][0]["id"].stringValue)!/100)
+                        }
+                        
                     }
                     completion(true)
                 } catch {
