@@ -51,6 +51,7 @@ class LocationModel: NSObject, ObservableObject {
         super.init()
         locationManager.delegate = self
         configureLocation()
+        getHourlyForeCast()
     }
     
     
@@ -88,6 +89,26 @@ class LocationModel: NSObject, ObservableObject {
             
         }
         
+    }
+    
+    func getHourlyForeCast() {
+        
+        AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(locationManager.location!.coordinate.latitude)&lon=\(locationManager.location!.coordinate.longitude)&exclude=daily,minutely,alerts,current&appid=\(API_KEY)&units=metric").responseJSON { (response) in
+            
+            if response.error == nil {
+                do {
+                    let json = try? JSON(data: response.data!)
+                    let hoursWeather = json!["hourly"].array
+                    
+                    for item in hoursWeather! {
+                        print(item)
+                    }
+                    
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
     func getDailyForcast(lat: String, lng: String, completion: @escaping (_ status:Bool)->()) {
