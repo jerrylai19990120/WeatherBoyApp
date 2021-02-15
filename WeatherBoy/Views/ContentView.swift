@@ -14,6 +14,8 @@ struct ContentView: View {
     
     @ObservedObject var locationModel = LocationModel()
     
+    var dayOfWeek = [1: "SUN", 2: "MON", 3: "TUE", 4: "WED", 5: "THUR", 6: "FRI", 7: "SAT"]
+    
     
     var body: some View {
         ZStack {
@@ -23,14 +25,17 @@ struct ContentView: View {
                 CityView(city: "\(locationModel.city),\(locationModel.province)")
                 
                 //weather status
-                MainWeatherStatusView(imageName: isNight ? "moon.stars.fill" : "cloud.sun.fill", temperature: locationModel.temperature)
+                MainWeatherStatusView(imageName: isNight ? locationModel.weatherIconsNight[locationModel.currentWeatherCode]! : locationModel.weatherIconsDay[locationModel.currentWeatherCode]!, temperature: locationModel.temperature)
                 
                 HStack {
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 76)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 76)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 76)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 76)
-                    WeatherDayView(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temperature: 76)
+                    
+                    ForEach(locationModel.weatherInfo, id: \.self) { item in
+                        
+                        WeatherDayView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
+                        
+                        
+                    }
+                    
                 }
                 Spacer()
                 
