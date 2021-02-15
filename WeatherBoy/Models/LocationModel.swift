@@ -34,6 +34,8 @@ class LocationModel: NSObject, ObservableObject {
     
     var weatherIconsNight = [2: "cloud.bolt.rain.fill", 3: "cloud.drizzle.fill", 5: "cloud.rain.fill", 6: "cloud.snow.fill", 7: "cloud.fog.fill", 8: "cloud.moon.fill", 800: "moon.stars.fill"]
     
+    var isNight: Bool = false
+    
     var weatherInfo = [[Int]]()
     
     private let locationManager = CLLocationManager()
@@ -62,6 +64,16 @@ class LocationModel: NSObject, ObservableObject {
                     let temp = Double(json!["main"]["temp"].stringValue)
                     self.temperature = Int(temp!)
                     self.currentWeatherCode = Int(json!["weather"][0]["id"].stringValue)!/100
+                    
+                    let time = NSDate().timeIntervalSince1970
+                    let interval = TimeInterval(time)
+                    let hour = self.calendar.component(.hour, from: Date())
+                    if hour >= 6 && hour <= 18 {
+                        self.isNight = false
+                    } else {
+                        self.isNight = true
+                    }
+                    
                 } catch {
                     print(error.localizedDescription)
                 }
@@ -102,7 +114,7 @@ class LocationModel: NSObject, ObservableObject {
 extension LocationModel: CLLocationManagerDelegate {
     
     func configureLocation(){
-        if authStatus == .notDetermined {
+        if authStatus == .notDetermined || authStatus == .denied || authStatus == .restricted {
             locationManager.requestAlwaysAuthorization()
         } else if authStatus == .authorizedAlways || authStatus == .authorizedWhenInUse{
             
@@ -114,7 +126,7 @@ extension LocationModel: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-
+        
         guard let location = locationManager.location?.coordinate else {return}
         latitude = location.latitude
         longitude = location.longitude

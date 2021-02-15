@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            BackgroundView(topColor: isNight ? .black : .blue, bottomColor: isNight ? .gray : Color("lightBlue"))
+            BackgroundView(topColor: locationModel.isNight ? .black : .blue, bottomColor: locationModel.isNight ? .gray : Color("lightBlue"))
             VStack{
                 //location
                 CityView(city: "\(locationModel.city),\(locationModel.province)")
@@ -39,13 +39,6 @@ struct ContentView: View {
                 }
                 Spacer()
                 
-                
-                Button(action: {
-                    self.isNight.toggle()
-                }, label: {
-                    WeatherButtonView()
-                })
-                Spacer()
             }
         }
     }
