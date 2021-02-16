@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		244F3897810B35DD81FBF6DF /* Pods_WeatherBoy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C90DABEB8F6DF9365DF42E7C /* Pods_WeatherBoy.framework */; };
+		9203506325DB73CE0050563E /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9203506225DB73CE0050563E /* WeatherModels.swift */; };
 		922570D625D997EC00367D6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922570D525D997EC00367D6C /* AppDelegate.swift */; };
 		922570D825D997EC00367D6C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922570D725D997EC00367D6C /* SceneDelegate.swift */; };
 		922570DA25D997ED00367D6C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922570D925D997ED00367D6C /* ContentView.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		29D857F1F04422730F45BAD7 /* Pods-WeatherBoy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherBoy.release.xcconfig"; path = "Target Support Files/Pods-WeatherBoy/Pods-WeatherBoy.release.xcconfig"; sourceTree = "<group>"; };
+		9203506225DB73CE0050563E /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
 		922570D225D997EC00367D6C /* WeatherBoy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherBoy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		922570D525D997EC00367D6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		922570D725D997EC00367D6C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				922570EB25D9B4F100367D6C /* LocationModel.swift */,
+				9203506225DB73CE0050563E /* WeatherModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				922570D625D997EC00367D6C /* AppDelegate.swift in Sources */,
 				922570EF25D9DCEA00367D6C /* Constants.swift in Sources */,
 				922570D825D997EC00367D6C /* SceneDelegate.swift in Sources */,
+				9203506325DB73CE0050563E /* WeatherModels.swift in Sources */,
 				922570DA25D997ED00367D6C /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,7 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.6;
+				CURRENT_PROJECT_VERSION = 1.0.11;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherBoy/Preview Content\"";
 				DEVELOPMENT_TEAM = 8L83CZ8839;
 				ENABLE_PREVIEWS = YES;
@@ -408,7 +412,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.6;
+				CURRENT_PROJECT_VERSION = 1.0.11;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherBoy/Preview Content\"";
 				DEVELOPMENT_TEAM = 8L83CZ8839;
 				ENABLE_PREVIEWS = YES;

@@ -28,6 +28,8 @@ class LocationModel: NSObject, ObservableObject {
     
     var days = [Int]()
     
+    //weather status
+    
     var weatherCodes = [Int]()
     
     var weatherIconsDay = [2: "cloud.bolt.rain.fill", 3: "cloud.drizzle.fill", 5: "cloud.rain.fill", 6: "cloud.snow.fill", 7: "sun.haze.fill", 8: "cloud.sun.fill", 800: "sun.max.fill"]
@@ -37,6 +39,10 @@ class LocationModel: NSObject, ObservableObject {
     var isNight: Bool = false
     
     var weatherInfo = [[Int]]()
+    
+    var hourlyWeatherInfo = [HourlyWeather]()
+    
+    //location
     
     private let locationManager = CLLocationManager()
     
@@ -75,10 +81,10 @@ class LocationModel: NSObject, ObservableObject {
                     let time = NSDate().timeIntervalSince1970
                     let interval = TimeInterval(time)
                     let hour = self.calendar.component(.hour, from: Date())
-                    if hour >= 6 && hour <= 18 {
-                        self.isNight = false
-                    } else {
+                    if hour < 6 || hour >= 18 {
                         self.isNight = true
+                    } else {
+                        self.isNight = false
                     }
                     
                 } catch {
@@ -97,12 +103,40 @@ class LocationModel: NSObject, ObservableObject {
             
             if response.error == nil {
                 do {
-                    let json = try? JSON(data: response.data!)
-                    let hoursWeather = json!["hourly"].array
                     
-                    for item in hoursWeather! {
-                        print(item)
+                    let json = try? JSON(data: response.data!)
+                    var hours = json!["hourly"].array
+                    var hoursWeather = hours![0...23]
+                    for item in hoursWeather {
+                        let temp = Int(Double(item["temp"].stringValue)!)
+                        let weatherCode = Int(item["weather"][0]["id"].stringValue)
+                        let time = Double(item["dt"].stringValue)
+                        
+                        let date = NSDate(timeIntervalSince1970: TimeInterval(exactly: time!)!)
+                        
+                        let hour = self.calendar.component(.hour, from: date as Date)
+                        
+                        var nightTime = false
+                        if hour < 6 || hour >= 18 {
+                            nightTime = true
+                        } else {
+                            nightTime = false
+                        }
+                        
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "HHa"
+                        let formattedDate = dateFormatter.string(from: date as Date)
+       
+                        if weatherCode! == 800 {
+                            let weather = HourlyWeather(time: formattedDate, weatherCode: 800, temp: temp, isNight: nightTime)
+                            self.hourlyWeatherInfo.append(weather)
+                        } else {
+                            let weather = HourlyWeather(time: formattedDate, weatherCode: weatherCode!/100, temp: temp, isNight: nightTime)
+                            self.hourlyWeatherInfo.append(weather)
+                        }
+                        
                     }
+                    
                     
                 } catch {
                     print(error.localizedDescription)
@@ -175,8 +209,11 @@ extension LocationModel: CLLocationManagerDelegate {
                 self.province = placemarks![0].administrativeArea!
                 self.country = placemarks![0].country!
                 self.getTemperature(city: placemarks![0].locality!)
+                
                 let latitude = String(format: "%f", placemarks![0].location!.coordinate.latitude)
+                
                 let longitude = String(format: "%f", placemarks![0].location!.coordinate.longitude)
+                
                 self.getDailyForcast(lat: latitude, lng: longitude) { (success) in
                     if success {
                         

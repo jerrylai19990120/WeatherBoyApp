@@ -16,46 +16,209 @@ struct ContentView: View {
     
     var dayOfWeek = [1: "SUN", 2: "MON", 3: "TUE", 4: "WED", 5: "THUR", 6: "FRI", 7: "SAT"]
     
+    var weatherStatusOpacity: Double = 1.0
     
     var body: some View {
-        ZStack {
-            BackgroundView(topColor: locationModel.isNight ? .black : .blue, bottomColor: locationModel.isNight ? .gray : Color("lightBlue"))
-            VStack{
-                //location
-                CityView(city: "\(locationModel.city),\(locationModel.province)")
-                
-                //weather status
-                MainWeatherStatusView(imageName: isNight ? locationModel.weatherIconsNight[locationModel.currentWeatherCode]! : locationModel.weatherIconsDay[locationModel.currentWeatherCode]!, temperature: locationModel.temperature)
-                
-                
-                HStack {
+        
+        GeometryReader { gr in
+            
+            ZStack {
+                BackgroundView(topColor: self.locationModel.isNight ? .black : .blue, bottomColor: self.locationModel.isNight ? .gray : Color("lightBlue"))
+                VStack{
+                    //location
+                    CityView(city: "\(self.locationModel.city),\(self.locationModel.province)")
                     
-                    ForEach(locationModel.weatherInfo, id: \.self) { item in
+                    ScrollView(showsIndicators: false) {
+                        //weather status
+                        MainWeatherStatusView(imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[self.locationModel.currentWeatherCode]! : self.locationModel.weatherIconsDay[self.locationModel.currentWeatherCode]!, temperature: self.locationModel.temperature).opacity(self.weatherStatusOpacity)
+                    
+                        //divider
+                        Rectangle()
+                            .fill(Color.white)
+                            .frame(height: 1)
+                            .padding(.bottom, 16)
+
+                        ScrollView(.horizontal, showsIndicators: false) {
+
+                            HStack(spacing: 12) {
+                                
+                                /*ForEach(self.locationModel.hourlyWeatherInfo, id: \.self){
+                                item in
+                                
+                                HourlyWeatherView(hourTime: item.time, imageName: item.isNight ? self.locationModel.weatherIconsNight[item.weatherCode]! : self.locationModel.weatherIconsDay[item.weatherCode]!, temperature: item.temp)
+                                }*/
+                                
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                
+                                
+                                /*ForEach(locationModel.weatherInfo, id: \.self) { item in
+                                 
+                                 WeatherDayView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
+                                 
+                                 
+                                 }*/
+                                
+                            }.padding([.trailing, .leading], 46)
+                        }
                         
-                        WeatherDayView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
+                        Spacer()
                         
+                        ScrollView(showsIndicators: false) {
+                            
+                            //divider
+                            Rectangle()
+                            .fill(Color.white)
+                                .frame(height: 1)
+                                .padding([.bottom, .top], 16)
+                            
+                            VStack {
+                                
+                                /*ForEach(self.locationModel.weatherInfo, id: \.self) { item in
+                                
+                                WeatherDayForcastView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
+                                
+                                
+                                }*/
+                                WeatherDayForcastView(dayOfWeek: "MON", imageName: "cloud.moon.fill", temperature: 18)
+                                WeatherDayForcastView(dayOfWeek: "TUE", imageName: "cloud.moon.fill", temperature: 18)
+                                WeatherDayForcastView(dayOfWeek: "WED", imageName: "cloud.moon.fill", temperature: 18)
+                                WeatherDayForcastView(dayOfWeek: "THUR", imageName: "cloud.moon.fill", temperature: 18)
+                                WeatherDayForcastView(dayOfWeek: "FRI", imageName: "cloud.moon.fill", temperature: 18)
+                                WeatherDayForcastView(dayOfWeek: "SAT", imageName: "cloud.moon.fill", temperature: 18)
+                                WeatherDayForcastView(dayOfWeek: "SUN", imageName: "cloud.moon.fill", temperature: 18)
+                                                                /*ForEach(locationModel.hourlyWeatherInfo, id: \.self){
+                                 item in
+                                 
+                                 HourlyWeatherView(hourTime: item.time, imageName: item.isNight ? self.locationModel.weatherIconsNight[item.weatherCode]! : self.locationModel.weatherIconsDay[item.weatherCode]!, temperature: item.temp)
+                                 }*/
+                                
+                            }.padding([.leading, .trailing], 46)
+                                
+                            
+                        }
                         
+                        //divider
+                        Rectangle()
+                        .fill(Color.white)
+                            .frame(height: 1)
+                            .padding([.bottom, .top], 16)
+                        
+                        VStack {
+                            
+                            HStack {
+                                
+                                VStack(alignment: .leading) {
+                                    Text("PRESSURE")
+                                        .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("7:13AM")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.4)
+                                
+                                
+                                
+                                VStack(alignment: .leading) {
+                                    Text("HUMIDITY")
+                                    .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("5:50PM")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.6)
+                                
+                                
+                            }.frame(width: gr.size.width)
+                            
+                            //divider
+                            Rectangle()
+                            .fill(Color.white)
+                                .frame(width: gr.size.width*0.9,height: 1)
+                                .padding([.top, .bottom], 3)
+                            
+                            HStack {
+                                
+                                VStack(alignment: .leading) {
+                                    Text("WIND")
+                                        .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("7:13AM")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.4)
+                                
+                                
+                                
+                                VStack(alignment: .leading) {
+                                    Text("FEELS LIKE")
+                                    .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("5:50PM")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.6)
+                                
+                                
+                            }.frame(width: gr.size.width)
+                            
+                            //divider
+                            Rectangle()
+                            .fill(Color.white)
+                                .frame(width: gr.size.width*0.9,height: 1)
+                                .padding([.top, .bottom], 3)
+                            
+                            HStack {
+                                
+                                VStack(alignment: .leading) {
+                                    Text("VISIBILITY")
+                                        .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("7:13AM")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.4)
+                                
+                                
+                                
+                                VStack(alignment: .leading) {
+                                    Text("UV INDEX")
+                                    .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("5:50PM")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.6)
+                                
+                                
+                            }.frame(width: gr.size.width)
+                            
+                        }.padding([.leading, .trailing], 16)
+                        
+                        //divider
+                        Rectangle()
+                        .fill(Color.white)
+                            .frame(height: 1)
+                            .padding([.top, .bottom], 16)
+            
                     }
                     
+
+                    
+                    
                 }
-                Spacer()
-                
-                ScrollView(showsIndicators: false) {
-                    VStack {
-                        
-                        HourlyWeatherView(hourTime: "6:10AM", imageName: "cloud.sun.bolt.fill", temperature: 18)
-                        HourlyWeatherView(hourTime: "7:10AM", imageName: "cloud.sun.bolt.fill", temperature: 29)
-                        HourlyWeatherView(hourTime: "7:10PM", imageName: "cloud.sun.bolt.fill", temperature: 12)
-                        HourlyWeatherView(hourTime: "7:20PM", imageName: "cloud.sun.bolt.fill", temperature: 10)
-                        HourlyWeatherView(hourTime: "7:40PM", imageName: "cloud.sun.bolt.fill", temperature: 10)
-                    }
-                }
-                Spacer()
-                Spacer()
-                Spacer()
-                
             }
+
         }
+        
     }
 }
 
@@ -65,22 +228,22 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct WeatherDayView: View {
+struct HourlyWeatherView: View {
     
-    var dayOfWeek: String
+    var hourTime: String
     var imageName: String
     var temperature: Int
     
     var body: some View {
         VStack {
-            Text("\(dayOfWeek)").font(.system(size: 16, weight: .medium, design: .default))
+            Text("\(hourTime)").font(.system(size: 13, weight: .medium, design: .default))
                 .foregroundColor(.white)
             Image(systemName: "\(imageName)").renderingMode(.original)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 40, height: 40)
+                .frame(width: 36, height: 36)
             Text("\(temperature)°")
-                .font(.system(size: 28, weight: .medium))
+                .font(.system(size: 13, weight: .medium))
                 .foregroundColor(.white)
         }
     }
@@ -119,45 +282,38 @@ struct MainWeatherStatusView: View {
                 .renderingMode(.original)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 130, height: 130)
+                .frame(width: 120, height: 120)
             Text("\(temperature)°")
-                .font(.system(size: 60, weight: .medium))
+                .font(.system(size: 54, weight: .medium))
                 .foregroundColor(.white)
         }
-        .padding(.bottom, 40)
     }
 }
 
-struct WeatherButtonView: View {
-    
-    var body: some View {
-        Text("Change Day Time")
-            .frame(width: 280, height: 50)
-            .background(Color.white)
-            .font(.system(size: 20, weight: .bold, design: .default))
-            .cornerRadius(10)
-    }
-}
 
-struct HourlyWeatherView: View {
+struct WeatherDayForcastView: View {
     
-    var hourTime: String
+    var dayOfWeek: String
     var imageName: String
     var temperature: Int
     
     var body: some View {
         HStack(spacing: 100){
-            Text("\(hourTime)")
-                .font(.system(size: 18, weight: .medium, design: .default))
+            Text("\(dayOfWeek)")
+                .font(.system(size: 16, weight: .medium, design: .default))
                 .foregroundColor(.white)
+                .frame(width:88, alignment: .leading)
             
             Image(systemName: "\(imageName)")
                 .resizable()
                 .renderingMode(.original)
-                .frame(width: 36, height: 36)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 30, height: 30)
+            
             Text("\(temperature)°")
-                .font(.system(size: 18, weight: .medium, design: .default))
+                .font(.system(size: 16, weight: .medium, design: .default))
                 .foregroundColor(.white)
+                .frame(width: 46, alignment: .trailing)
         }
     }
 }
