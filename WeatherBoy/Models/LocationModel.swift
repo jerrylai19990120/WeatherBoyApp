@@ -13,6 +13,7 @@ import SwiftyJSON
 
 class LocationModel: NSObject, ObservableObject {
     
+    
     @Published var latitude: Double = 0
     @Published var longitude: Double = 0
     @Published var city: String = ""
@@ -52,12 +53,52 @@ class LocationModel: NSObject, ObservableObject {
     
     private var location: CLLocation?
     
+    //current weather details
+    var currentWeatherDetails: CurrentWeatherInfo = CurrentWeatherInfo(sunrise: "7:00AM", sunset: "6:00PM", humidity: 1, wind_speed: 11, feels_like: 12, uvi: 1, pressure: 1, visibility: 1.6)
     
     override init() {
         super.init()
         locationManager.delegate = self
         configureLocation()
         getHourlyForeCast()
+        getCurrentWeatherInfo()
+    }
+    
+    func getCurrentWeatherInfo(){
+        
+        AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(locationManager.location!.coordinate.latitude)&lon=\(locationManager.location!.coordinate.longitude)&exclude=daily,minutely,alerts,hourly&appid=\(API_KEY)&units=metric").responseJSON { (response) in
+            
+            if response.error == nil {
+                do {
+                    let json = try? JSON(data: response.data!)
+                    let currentInfo = json!["current"]
+                    
+                    let humidity = Int(Double(currentInfo["humidity"].stringValue)!)
+                    let feels_like = Int(Double(currentInfo["feels_like"].stringValue)!)
+                    let wind_speed = Int(Double(currentInfo["wind_speed"].stringValue)!*2.24)
+                    let pressure = Int(Double(currentInfo["pressure"].stringValue)!*0.029529983071445)
+                    let uvi = Int(Double(currentInfo["uvi"].stringValue)!)
+                    let visibility = Double(currentInfo["visibility"].stringValue)!/1600
+                    let sunset = Double(currentInfo["sunset"].stringValue)!
+                    let sunrise = Double(currentInfo["sunrise"].stringValue)!
+                    
+                    let riseTime = NSDate(timeIntervalSince1970: TimeInterval(exactly: sunrise)!)
+                    
+                    let setTime = NSDate(timeIntervalSince1970: TimeInterval(exactly: sunset)!)
+                    
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "H:mma"
+                    let formattedRiseTime = formatter.string(from: riseTime as Date)
+                    let formattedSetTime = formatter.string(from: setTime as Date)
+                    
+                    self.currentWeatherDetails = CurrentWeatherInfo(sunrise: formattedRiseTime, sunset: formattedSetTime, humidity: humidity, wind_speed: wind_speed, feels_like: feels_like, uvi: uvi, pressure: pressure, visibility: visibility)
+                    
+                    
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
     

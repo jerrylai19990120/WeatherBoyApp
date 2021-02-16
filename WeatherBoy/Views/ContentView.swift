@@ -28,7 +28,7 @@ struct ContentView: View {
                     //location
                     CityView(city: "\(self.locationModel.city),\(self.locationModel.province)")
                     
-                    ScrollView(showsIndicators: false) {
+                    ScrollView(.vertical, showsIndicators: false) {
                         //weather status
                         MainWeatherStatusView(imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[self.locationModel.currentWeatherCode]! : self.locationModel.weatherIconsDay[self.locationModel.currentWeatherCode]!, temperature: self.locationModel.temperature).opacity(self.weatherStatusOpacity)
                     
@@ -42,12 +42,13 @@ struct ContentView: View {
 
                             HStack(spacing: 12) {
                                 
-                                /*ForEach(self.locationModel.hourlyWeatherInfo, id: \.self){
+                                ForEach(self.locationModel.hourlyWeatherInfo, id: \.self){
                                 item in
                                 
                                 HourlyWeatherView(hourTime: item.time, imageName: item.isNight ? self.locationModel.weatherIconsNight[item.weatherCode]! : self.locationModel.weatherIconsDay[item.weatherCode]!, temperature: item.temp)
-                                }*/
+                                }
                                 
+                                /*HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
                                 HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
                                 HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
                                 HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
@@ -56,16 +57,9 @@ struct ContentView: View {
                                 HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
                                 HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
                                 HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
+                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)*/
                                 
                                 
-                                /*ForEach(locationModel.weatherInfo, id: \.self) { item in
-                                 
-                                 WeatherDayView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
-                                 
-                                 
-                                 }*/
                                 
                             }.padding([.trailing, .leading], 46)
                         }
@@ -82,24 +76,20 @@ struct ContentView: View {
                             
                             VStack {
                                 
-                                /*ForEach(self.locationModel.weatherInfo, id: \.self) { item in
+                                ForEach(self.locationModel.weatherInfo, id: \.self) { item in
                                 
                                 WeatherDayForcastView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
                                 
                                 
-                                }*/
+                                }/*
                                 WeatherDayForcastView(dayOfWeek: "MON", imageName: "cloud.moon.fill", temperature: 18)
                                 WeatherDayForcastView(dayOfWeek: "TUE", imageName: "cloud.moon.fill", temperature: 18)
                                 WeatherDayForcastView(dayOfWeek: "WED", imageName: "cloud.moon.fill", temperature: 18)
                                 WeatherDayForcastView(dayOfWeek: "THUR", imageName: "cloud.moon.fill", temperature: 18)
                                 WeatherDayForcastView(dayOfWeek: "FRI", imageName: "cloud.moon.fill", temperature: 18)
                                 WeatherDayForcastView(dayOfWeek: "SAT", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "SUN", imageName: "cloud.moon.fill", temperature: 18)
-                                                                /*ForEach(locationModel.hourlyWeatherInfo, id: \.self){
-                                 item in
-                                 
-                                 HourlyWeatherView(hourTime: item.time, imageName: item.isNight ? self.locationModel.weatherIconsNight[item.weatherCode]! : self.locationModel.weatherIconsDay[item.weatherCode]!, temperature: item.temp)
-                                 }*/
+                                WeatherDayForcastView(dayOfWeek: "SUN", imageName: "cloud.moon.fill", temperature: 18)*/
+                                                        
                                 
                             }.padding([.leading, .trailing], 46)
                                 
@@ -117,10 +107,41 @@ struct ContentView: View {
                             HStack {
                                 
                                 VStack(alignment: .leading) {
+                                    Text("SUNRISE")
+                                        .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("\(self.locationModel.currentWeatherDetails.sunrise)")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.4)
+                                
+                                
+                                
+                                VStack(alignment: .leading) {
+                                    Text("SUNSET")
+                                    .font(.system(size: 12, weight: .light))
+                                    .foregroundColor(.white)
+                                    Text("\(self.locationModel.currentWeatherDetails.sunset)")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundColor(.white)
+                                }.frame(width: gr.size.width*0.6)
+                                
+                                
+                            }.frame(width: gr.size.width)
+                            
+                            //divider
+                            Rectangle()
+                            .fill(Color.white)
+                                .frame(width: gr.size.width*0.9,height: 1)
+                                .padding([.top, .bottom], 3)
+
+                            HStack {
+                                
+                                VStack(alignment: .leading) {
                                     Text("PRESSURE")
                                         .font(.system(size: 12, weight: .light))
                                     .foregroundColor(.white)
-                                    Text("7:13AM")
+                                    Text("\(self.locationModel.currentWeatherDetails.pressure) inHg")
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                 }.frame(width: gr.size.width*0.4)
@@ -131,7 +152,7 @@ struct ContentView: View {
                                     Text("HUMIDITY")
                                     .font(.system(size: 12, weight: .light))
                                     .foregroundColor(.white)
-                                    Text("5:50PM")
+                                    Text("\(self.locationModel.currentWeatherDetails.humidity)%")
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                 }.frame(width: gr.size.width*0.6)
@@ -151,7 +172,7 @@ struct ContentView: View {
                                     Text("WIND")
                                         .font(.system(size: 12, weight: .light))
                                     .foregroundColor(.white)
-                                    Text("7:13AM")
+                                    Text("\(self.locationModel.currentWeatherDetails.wind_speed) mph")
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                 }.frame(width: gr.size.width*0.4)
@@ -162,7 +183,7 @@ struct ContentView: View {
                                     Text("FEELS LIKE")
                                     .font(.system(size: 12, weight: .light))
                                     .foregroundColor(.white)
-                                    Text("5:50PM")
+                                    Text("\(self.locationModel.currentWeatherDetails.feels_like)°")
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                 }.frame(width: gr.size.width*0.6)
@@ -182,7 +203,7 @@ struct ContentView: View {
                                     Text("VISIBILITY")
                                         .font(.system(size: 12, weight: .light))
                                     .foregroundColor(.white)
-                                    Text("7:13AM")
+                                    Text("\(String(format: "%.1f", self.locationModel.currentWeatherDetails.visibility)) mi")
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                 }.frame(width: gr.size.width*0.4)
@@ -193,7 +214,7 @@ struct ContentView: View {
                                     Text("UV INDEX")
                                     .font(.system(size: 12, weight: .light))
                                     .foregroundColor(.white)
-                                    Text("5:50PM")
+                                    Text("\(self.locationModel.currentWeatherDetails.uvi)")
                                     .font(.system(size: 20, weight: .medium))
                                     .foregroundColor(.white)
                                 }.frame(width: gr.size.width*0.6)
