@@ -48,17 +48,6 @@ struct ContentView: View {
                                 HourlyWeatherView(hourTime: item.time, imageName: item.isNight ? self.locationModel.weatherIconsNight[item.weatherCode]! : self.locationModel.weatherIconsDay[item.weatherCode]!, temperature: item.temp)
                                 }
                                 
-                                /*HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)
-                                HourlyWeatherView(hourTime: "10PM", imageName: "cloud.sun.fill", temperature: 18)*/
-                                
                                 
                                 
                             }.padding([.trailing, .leading], 46)
@@ -78,18 +67,10 @@ struct ContentView: View {
                                 
                                 ForEach(self.locationModel.weatherInfo, id: \.self) { item in
                                 
-                                WeatherDayForcastView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, temperature: item[0])
+                                    WeatherDayForcastView(dayOfWeek: "\(self.dayOfWeek[item[1]]!)", imageName: self.locationModel.isNight ? self.locationModel.weatherIconsNight[item[2]]! : self.locationModel.weatherIconsDay[item[2]]!, minTemperature: item[0], maxTemperature: item[3])
                                 
                                 
-                                }/*
-                                WeatherDayForcastView(dayOfWeek: "MON", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "TUE", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "WED", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "THUR", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "FRI", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "SAT", imageName: "cloud.moon.fill", temperature: 18)
-                                WeatherDayForcastView(dayOfWeek: "SUN", imageName: "cloud.moon.fill", temperature: 18)*/
-                                                        
+                                }
                                 
                             }.padding([.leading, .trailing], 46)
                                 
@@ -316,10 +297,11 @@ struct WeatherDayForcastView: View {
     
     var dayOfWeek: String
     var imageName: String
-    var temperature: Int
+    var minTemperature: Int
+    var maxTemperature: Int
     
     var body: some View {
-        HStack(spacing: 100){
+        HStack(spacing:60){
             Text("\(dayOfWeek)")
                 .font(.system(size: 16, weight: .medium, design: .default))
                 .foregroundColor(.white)
@@ -331,10 +313,18 @@ struct WeatherDayForcastView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
             
-            Text("\(temperature)°")
-                .font(.system(size: 16, weight: .medium, design: .default))
-                .foregroundColor(.white)
-                .frame(width: 46, alignment: .trailing)
+            HStack {
+                Text("\(maxTemperature)°")
+                    .font(.system(size: 16, weight: .medium, design: .default))
+                    .foregroundColor(.white)
+                    .frame(width: 46, alignment: .trailing)
+                
+                Text("\(minTemperature)°")
+                    .font(.system(size: 16, weight: .medium, design: .default))
+                    .foregroundColor(.white)
+                    .frame(width: 46, alignment: .trailing)
+            }
+            
         }
     }
 }

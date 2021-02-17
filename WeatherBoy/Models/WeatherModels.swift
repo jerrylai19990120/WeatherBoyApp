@@ -13,4 +13,5 @@ struct HourlyWeather: Hashable {
     var weatherCode: Int
     var temp: Int
     var isNight: Bool
+    
 }

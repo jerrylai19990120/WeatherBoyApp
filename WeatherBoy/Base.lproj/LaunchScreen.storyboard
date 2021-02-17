@@ -15,38 +15,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun.max.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yek-Bx-Yc0">
-                                <rect key="frame" x="-12" y="64" width="240" height="139"/>
-                                <color key="tintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="CeV-mW-aQ2">
+                                <rect key="frame" x="87" y="384.5" width="240" height="128"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="138.5" id="98B-UG-6yy"/>
-                                    <constraint firstAttribute="width" constant="240" id="FNq-8k-C9x"/>
+                                    <constraint firstAttribute="height" constant="133.5" id="fVn-MZ-HwR"/>
+                                    <constraint firstAttribute="width" constant="240" id="nr0-mA-oKn"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smoke.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bbm-ok-8af">
-                                <rect key="frame" x="207" y="91.5" width="159" height="98"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sun.max.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="XN7-hP-Yos">
+                                <rect key="frame" x="143" y="339.5" width="240" height="162"/>
+                                <color key="tintColor" red="0.94509803921568625" green="0.56170198612446864" blue="0.25566790101112363" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="159" id="LbC-P6-yvQ"/>
-                                    <constraint firstAttribute="height" constant="102.5" id="e8b-gq-ugu"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flame.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="W6X-lb-rwl">
-                                <rect key="frame" x="147" y="387" width="120" height="120.5"/>
-                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="7Mg-qK-3lZ"/>
-                                    <constraint firstAttribute="height" constant="120" id="o1O-lG-oGa"/>
+                                    <constraint firstAttribute="height" constant="161.5" id="FW7-Dv-GMe"/>
+                                    <constraint firstAttribute="width" constant="240" id="vTX-3n-c6g"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.32382379179999998" green="0.82271794730000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.18823529411764706" green="0.65490196078431373" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bbm-ok-8af" secondAttribute="trailing" constant="48" id="BZa-SW-PVx"/>
-                            <constraint firstItem="W6X-lb-rwl" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="GN4-Ij-HdL"/>
-                            <constraint firstItem="Bbm-ok-8af" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="45" id="aED-0a-yWc"/>
-                            <constraint firstItem="yek-Bx-Yc0" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="-12" id="kNa-EA-YIQ"/>
-                            <constraint firstItem="yek-Bx-Yc0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20.5" id="w6e-Fr-TQz"/>
-                            <constraint firstItem="W6X-lb-rwl" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="wsw-xL-drB"/>
+                            <constraint firstItem="CeV-mW-aQ2" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="MCZ-1U-aRV"/>
+                            <constraint firstItem="XN7-hP-Yos" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="143" id="PvR-Ax-jC6"/>
+                            <constraint firstItem="CeV-mW-aQ2" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Zqy-Yc-14F"/>
+                            <constraint firstItem="XN7-hP-Yos" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="296" id="nxB-l9-Dne"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -57,8 +48,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="flame.fill" catalog="system" width="109" height="128"/>
-        <image name="smoke.fill" catalog="system" width="128" height="90"/>
+        <image name="cloud.fill" catalog="system" width="128" height="84"/>
         <image name="sun.max.fill" catalog="system" width="128" height="124"/>
     </resources>
 </document>

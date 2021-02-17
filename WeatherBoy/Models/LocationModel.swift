@@ -21,7 +21,7 @@ class LocationModel: NSObject, ObservableObject {
     @Published var country: String = ""
     @Published var temperature: Int = 0
     
-    @Published var tempFor7days = [Int]()
+    @Published var tempFor7days = [[Int]]()
     
     let calendar = Calendar.current
     
@@ -196,8 +196,9 @@ class LocationModel: NSObject, ObservableObject {
                     let dailyForcasts = json!["daily"].array
                     
                     for i in 1...7 {
-                        let temp = Int(Double(dailyForcasts![i]["temp"]["day"].stringValue)!)
-                        self.tempFor7days.append(temp)
+                        let minTemp = Int(Double(dailyForcasts![i]["temp"]["min"].stringValue)!)
+                         let maxTemp = Int(Double(dailyForcasts![i]["temp"]["max"].stringValue)!)
+                        self.tempFor7days.append([minTemp, maxTemp])
                         if Int(dailyForcasts![i]["weather"][0]["id"].stringValue)! == 800 {
                             self.weatherCodes.append(800)
                         } else {
@@ -272,7 +273,7 @@ extension LocationModel: CLLocationManagerDelegate {
                         
                         for i in 0...6 {
                             
-                            self.weatherInfo.append([self.tempFor7days[i], self.days[i], self.weatherCodes[i]])
+                            self.weatherInfo.append([self.tempFor7days[i][0], self.days[i], self.weatherCodes[i], self.tempFor7days[i][1]])
                         }
                     }
                 }
