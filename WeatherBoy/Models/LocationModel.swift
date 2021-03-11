@@ -66,7 +66,9 @@ class LocationModel: NSObject, ObservableObject {
     
     func getCurrentWeatherInfo(){
         
-        AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(locationManager.location!.coordinate.latitude)&lon=\(locationManager.location!.coordinate.longitude)&exclude=daily,minutely,alerts,hourly&appid=\(API_KEY)&units=metric").responseJSON { (response) in
+        guard let location = locationManager.location else {return}
+        
+        AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)&exclude=daily,minutely,alerts,hourly&appid=\(API_KEY)&units=metric").responseJSON { (response) in
             
             if response.error == nil {
                 do {
@@ -140,7 +142,9 @@ class LocationModel: NSObject, ObservableObject {
     
     func getHourlyForeCast() {
         
-        AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(locationManager.location!.coordinate.latitude)&lon=\(locationManager.location!.coordinate.longitude)&exclude=daily,minutely,alerts,current&appid=\(API_KEY)&units=metric").responseJSON { (response) in
+        guard let location = locationManager.location else {return}
+        
+        AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)&exclude=daily,minutely,alerts,current&appid=\(API_KEY)&units=metric").responseJSON { (response) in
             
             if response.error == nil {
                 do {
