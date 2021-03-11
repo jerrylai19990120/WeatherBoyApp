@@ -66,7 +66,9 @@ class LocationModel: NSObject, ObservableObject {
     
     func getCurrentWeatherInfo(){
         
-        guard let location = locationManager.location else {return}
+        guard let location = locationManager.location else {
+            return
+        }
         
         AF.request("https://api.openweathermap.org/data/2.5/onecall?lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)&exclude=daily,minutely,alerts,hourly&appid=\(API_KEY)&units=metric").responseJSON { (response) in
             
@@ -148,7 +150,6 @@ class LocationModel: NSObject, ObservableObject {
             
             if response.error == nil {
                 do {
-                    
                     let json = try? JSON(data: response.data!)
                     var hours = json!["hourly"].array
                     var hoursWeather = hours![0...23]
@@ -226,7 +227,7 @@ class LocationModel: NSObject, ObservableObject {
 extension LocationModel: CLLocationManagerDelegate {
     
     func configureLocation(){
-        if authStatus == .notDetermined || authStatus == .denied || authStatus == .restricted {
+        if authStatus == .notDetermined || authStatus == .denied {
             locationManager.requestAlwaysAuthorization()
         } else if authStatus == .authorizedAlways || authStatus == .authorizedWhenInUse{
             
@@ -239,7 +240,9 @@ extension LocationModel: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
-        guard let location = locationManager.location?.coordinate else {return}
+        guard let location = locationManager.location?.coordinate else {
+            return
+        }
         latitude = location.latitude
         longitude = location.longitude
         self.location = locationManager.location
